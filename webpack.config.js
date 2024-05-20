@@ -1,5 +1,5 @@
-const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'development',
@@ -31,18 +31,23 @@ module.exports = {
         }
       }, {
         loader: 'sass-loader'
-      }],
-      exclude: /node_modules/
+      }]
     }]
   },
   devServer: {
-    contenteBase: './public',
-    writeToDisk: true,
-    historyApiFallback: true
+    static: './public',
+    devMiddleware: {
+      writeToDisk: true
+    },
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: '/index.html' }
+      ]
+    }
   },
   externals: {
     react: 'React',
-    'react-dom': 'ReactDom'
+    'react-dom': 'ReactDOM'
   },
   plugins: [
     new CleanWebpackPlugin()
